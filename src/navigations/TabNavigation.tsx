@@ -93,8 +93,6 @@ const TabNavigation = () => {
   )
 }
 
-export default TabNavigation
-
 const styles = StyleSheet.create({
   tabBarStyle: {
     height: 80,
@@ -109,6 +107,8 @@ const styles = StyleSheet.create({
     top: 0,
     bot: 0,
     left: 0,
-    ringt: 0
+    right: 0
   }
 })
+
+export default TabNavigation
