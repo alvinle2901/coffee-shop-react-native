@@ -232,9 +232,9 @@ const HomeScreen = ({ navigation }: any) => {
                   type={item.type}
                   roasted={item.roasted}
                   special_ingredient={item.special_ingredient}
-                  average_rating={item.avarage_rating}
+                  average_rating={item.average_rating}
                   price={item.prices[2]}
-                  imagelink_square={item.image_link_square}
+                  imagelink_square={item.imagelink_square}
                   buttonPressHandler={() => {}}
                 />
               </TouchableOpacity>
@@ -269,9 +269,9 @@ const HomeScreen = ({ navigation }: any) => {
                   type={item.type}
                   roasted={item.roasted}
                   special_ingredient={item.special_ingredient}
-                  average_rating={item.avarage_rating}
+                  average_rating={item.average_rating}
                   price={item.prices[2]}
-                  imagelink_square={item.image_link_square}
+                  imagelink_square={item.imagelink_square}
                   buttonPressHandler={() => {}}
                 />
               </TouchableOpacity>
