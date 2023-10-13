@@ -48,7 +48,7 @@ const getCoffeeList = (category: string, data: any) => {
   }
 }
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}: any) => {
   const CoffeeList = useStore((state: any) => state.CoffeeList)
   const BeanList = useStore((state: any) => state.BeanList)
 
@@ -246,7 +246,9 @@ const HomeScreen = () => {
           data={BeanList}
           renderItem={({ item }) => {
             return (
-              <TouchableOpacity onPress={() => {}}>
+              <TouchableOpacity onPress={() => {
+                navigation.push('Detail')
+              }}>
                 <CoffeeCard
                   name={item.name}
                   id={item.id}
