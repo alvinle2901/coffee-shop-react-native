@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   View,
   TextInput,
-  FlatList
+  FlatList,
+  Dimensions
 } from 'react-native'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 
@@ -66,6 +67,31 @@ const HomeScreen = () => {
   const listRef: any = useRef<FlatList>()
   const tabBarHeight = useBottomTabBarHeight()
 
+  const searchCoffee = (search: string) => {
+    if (search != '') {
+      listRef?.current?.scrollToOffset({
+        animated: true,
+        offset: 0
+      })
+      setCategoryIndex({ index: 0, category: categories[0] })
+      setSortedCoffee([
+        ...CoffeeList.filter((item: any) =>
+          item.name.toLowerCase().includes(search.toLowerCase())
+        )
+      ])
+    }
+  }
+
+  const resetSearchCoffee = () => {
+    listRef?.current?.scrollToOffset({
+      animated: true,
+      offset: 0
+    })
+    setCategoryIndex({ index: 0, category: categories[0] })
+    setSortedCoffee([...CoffeeList])
+    setSearch('')
+  }
+
   return (
     <View style={styles.ScreenContainer}>
       <StatusBar backgroundColor={COLORS.primaryBlackHex}></StatusBar>
@@ -82,7 +108,11 @@ const HomeScreen = () => {
         {/* Search */}
 
         <View style={styles.InputContainerComponent}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              searchCoffee(search)
+            }}
+          >
             <CustomIcon
               style={styles.InputIcon}
               name="search"
@@ -97,10 +127,30 @@ const HomeScreen = () => {
           <TextInput
             placeholder="Find your coffee"
             value={search}
-            onChangeText={text => setSearch(text)}
+            onChangeText={text => {
+              setSearch(text)
+              searchCoffee(text)
+
+            }}
             placeholderTextColor={COLORS.primaryLightGreyHex}
             style={styles.TextInputContainer}
           />
+          {search.length > 0 ? (
+            <TouchableOpacity
+              onPress={() => {
+                resetSearchCoffee()
+              }}
+            >
+              <CustomIcon
+                style={styles.InputIcon}
+                name="close"
+                size={FONTSIZE.size_16}
+                color={COLORS.primaryLightGreyHex}
+              />
+            </TouchableOpacity>
+          ) : (
+            <></>
+          )}
         </View>
 
         {/* Category Scroller */}
@@ -156,6 +206,11 @@ const HomeScreen = () => {
         <FlatList
           ref={listRef}
           horizontal
+          ListEmptyComponent={
+            <View style={styles.EmptyListContainer}>
+              <Text style={styles.CategoryText}>No Coffee Available</Text>
+            </View>
+          }
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.FlatListContainer}
           keyExtractor={item => item.id}
@@ -279,5 +334,11 @@ const styles = StyleSheet.create({
     marginTop: SPACING.space_20,
     fontFamily: FONTFAMILY.poppins_medium,
     color: COLORS.secondaryLightGreyHex
+  },
+  EmptyListContainer: {
+    width: Dimensions.get('window').width - SPACING.space_30 * 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: SPACING.space_36 * 3.6
   }
 })
