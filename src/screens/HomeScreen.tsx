@@ -48,7 +48,7 @@ const getCoffeeList = (category: string, data: any) => {
   }
 }
 
-const HomeScreen = ({navigation}: any) => {
+const HomeScreen = ({ navigation }: any) => {
   const CoffeeList = useStore((state: any) => state.CoffeeList)
   const BeanList = useStore((state: any) => state.BeanList)
 
@@ -130,7 +130,6 @@ const HomeScreen = ({navigation}: any) => {
             onChangeText={text => {
               setSearch(text)
               searchCoffee(text)
-
             }}
             placeholderTextColor={COLORS.primaryLightGreyHex}
             style={styles.TextInputContainer}
@@ -217,7 +216,15 @@ const HomeScreen = ({navigation}: any) => {
           data={sortedCoffee}
           renderItem={({ item }) => {
             return (
-              <TouchableOpacity onPress={() => {}}>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.push('Detail', {
+                    id: item.id,
+                    index: item.index,
+                    type: item.type
+                  })
+                }}
+              >
                 <CoffeeCard
                   name={item.name}
                   id={item.id}
@@ -246,9 +253,15 @@ const HomeScreen = ({navigation}: any) => {
           data={BeanList}
           renderItem={({ item }) => {
             return (
-              <TouchableOpacity onPress={() => {
-                navigation.push('Detail')
-              }}>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.push('Detail', {
+                    id: item.id,
+                    index: item.index,
+                    type: item.type
+                  })
+                }}
+              >
                 <CoffeeCard
                   name={item.name}
                   id={item.id}
