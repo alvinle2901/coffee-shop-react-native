@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import {
   ScrollView,
   StatusBar,
@@ -63,6 +63,7 @@ const HomeScreen = () => {
     getCoffeeList(categoryIndex.category, CoffeeList)
   )
 
+  const listRef: any = useRef<FlatList>()
   const tabBarHeight = useBottomTabBarHeight()
 
   return (
@@ -117,6 +118,10 @@ const HomeScreen = () => {
               <TouchableOpacity
                 style={styles.CategoryScrollViewItem}
                 onPress={() => {
+                  listRef?.current?.scrollToOffset({
+                    animated: true,
+                    offset: 0
+                  })
                   setCategoryIndex({
                     index: index,
                     category: categories[index]
@@ -149,6 +154,7 @@ const HomeScreen = () => {
         {/* Coffee FlatList */}
 
         <FlatList
+          ref={listRef}
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.FlatListContainer}
@@ -156,7 +162,36 @@ const HomeScreen = () => {
           data={sortedCoffee}
           renderItem={({ item }) => {
             return (
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => {}}>
+                <CoffeeCard
+                  name={item.name}
+                  id={item.id}
+                  index={item.index}
+                  type={item.type}
+                  roasted={item.roasted}
+                  special_ingredient={item.special_ingredient}
+                  average_rating={item.avarage_rating}
+                  price={item.prices[2]}
+                  imagelink_square={item.image_link_square}
+                  buttonPressHandler={() => {}}
+                />
+              </TouchableOpacity>
+            )
+          }}
+        />
+
+        <Text style={styles.CoffeeBeansTitle}>Coffee Beans</Text>
+
+        {/* Bean Flatlist */}
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.FlatListContainer}
+          keyExtractor={item => item.id}
+          data={BeanList}
+          renderItem={({ item }) => {
+            return (
+              <TouchableOpacity onPress={() => {}}>
                 <CoffeeCard
                   name={item.name}
                   id={item.id}
@@ -237,5 +272,12 @@ const styles = StyleSheet.create({
     gap: SPACING.space_20,
     paddingVertical: SPACING.space_20,
     paddingHorizontal: SPACING.space_30
+  },
+  CoffeeBeansTitle: {
+    fontSize: FONTSIZE.size_20,
+    marginLeft: SPACING.space_30,
+    marginTop: SPACING.space_20,
+    fontFamily: FONTFAMILY.poppins_medium,
+    color: COLORS.secondaryLightGreyHex
   }
 })
