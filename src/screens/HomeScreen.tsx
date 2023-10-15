@@ -131,7 +131,7 @@ const HomeScreen = ({ navigation }: any) => {
         contentContainerStyle={styles.ScrollViewFlex}
       >
         {/* Header */}
-        <Header title="Home Screen" />
+        <Header title="" />
 
         <Text style={styles.ScreenTitle}>
           Find the best{'\n'}coffee for you

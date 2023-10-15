@@ -12,6 +12,8 @@ import { COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme'
 import GradientBGIcon from '../components/GradientBGIcon'
 import PaymentMethod from '../components/PaymentMethod'
 import PaymentFooter from '../components/PaymentFooter'
+import { useStore } from '../store/store'
+import PopUpAnimation from '../components/PopUpAnimation'
 
 const PaymentList = [
   {
@@ -38,10 +40,35 @@ const PaymentList = [
 
 const PaymentScreen = ({ navigation, route }: any) => {
   const [paymentMode, setPaymentMode] = useState('Google Pay')
+  const [showAnimation, setShowAnimation] = useState(false)
+
+  const calculateCartPrice = useStore((state: any) => state.calculateCartPrice)
+  const addToOrderListFromCart = useStore(
+    (state: any) => state.addToOrderListFromCart
+  )
+
+  const buttonPressHandler = () => {
+    setShowAnimation(true)
+    addToOrderListFromCart()
+    calculateCartPrice()
+    setTimeout(() => {
+      setShowAnimation(false)
+      navigation.navigate('Order')
+    }, 2000)
+  }
 
   return (
     <View style={styles.ScreenContainer}>
       <StatusBar backgroundColor={COLORS.primaryBlackHex} />
+
+      {showAnimation ? (
+        <PopUpAnimation
+          style={styles.LottieAnimation}
+          source={'../lottie/successful.json'}
+        />
+      ) : (
+        <></>
+      )}
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.ScrollViewFlex}
@@ -79,7 +106,7 @@ const PaymentScreen = ({ navigation, route }: any) => {
 
       <PaymentFooter
         price={{ price: route.params.amount, currency: '$' }}
-        buttonPressHandler={undefined}
+        buttonPressHandler={buttonPressHandler}
         buttonTitle={`Pay with ${paymentMode}`}
       />
     </View>
@@ -115,5 +142,8 @@ const styles = StyleSheet.create({
   PaymentOptionsContainer: {
     padding: SPACING.space_15,
     gap: SPACING.space_15
+  },
+  LottieAnimation: {
+    flex: 1
   }
 })

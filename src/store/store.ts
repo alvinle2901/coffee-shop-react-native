@@ -178,7 +178,7 @@ export const useStore = create(
             }
           })
         ),
-      addToOrderHistoryListFromCart: () =>
+      addToOrderListFromCart: () =>
         set(
           produce(state => {
             let temp = state.CartList.reduce(
@@ -186,8 +186,8 @@ export const useStore = create(
                 accumulator + parseFloat(currentValue.ItemPrice),
               0
             )
-            if (state.OrderHistoryList.length > 0) {
-              state.OrderHistoryList.unshift({
+            if (state.OrderList.length > 0) {
+              state.OrderList.unshift({
                 OrderDate:
                   new Date().toDateString() +
                   ' ' +
@@ -196,7 +196,7 @@ export const useStore = create(
                 CartListPrice: temp.toFixed(2).toString()
               })
             } else {
-              state.OrderHistoryList.push({
+              state.OrderList.push({
                 OrderDate:
                   new Date().toDateString() +
                   ' ' +
