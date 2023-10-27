@@ -13,13 +13,13 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ title }) => {
   return (
     <View style={styles.HeaderContainer}>
-      <GradientBGIcon
+      {/* <GradientBGIcon
         name="menu"
         color={COLORS.primaryLightGreyHex}
         size={FONTSIZE.size_16}
-      />
+      /> */}
       <Text style={styles.HeaderText}>{title}</Text>
-      <ProfilePic />
+      {/* <ProfilePic /> */}
     </View>
   )
 }
@@ -28,10 +28,11 @@ export default Header
 
 const styles = StyleSheet.create({
   HeaderContainer: {
-    padding: SPACING.space_30,
-    flexDirection: 'row',
+    padding: SPACING.space_36,
+    // flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    
+    // justifyContent: 'space-between'
   },
   HeaderText: {
     fontFamily: FONTFAMILY.poppins_semibold,

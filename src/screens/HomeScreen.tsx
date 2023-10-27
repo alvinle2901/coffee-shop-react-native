@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react'
+import { useStore } from '../store/store'
 import {
   ScrollView,
   StatusBar,
@@ -12,7 +13,6 @@ import {
   ToastAndroid
 } from 'react-native'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
-
 import {
   BORDERRADIUS,
   COLORS,
@@ -20,7 +20,6 @@ import {
   FONTSIZE,
   SPACING
 } from '../theme/theme'
-import { useStore } from '../store/store'
 
 import Header from '../components/Header'
 import CustomIcon from '../components/CustomIcon'
@@ -52,8 +51,8 @@ const getCoffeeList = (category: string, data: any) => {
 const HomeScreen = ({ navigation }: any) => {
   const CoffeeList = useStore((state: any) => state.CoffeeList)
   const BeanList = useStore((state: any) => state.BeanList)
-  const addToCart = useStore((state: any) => state.addToCart);
-  const calculateCartPrice = useStore((state: any) => state.calculateCartPrice);
+  const addToCart = useStore((state: any) => state.addToCart)
+  const calculateCartPrice = useStore((state: any) => state.calculateCartPrice)
 
   const [categories, setCategories] = useState(
     getCategoriesfromData(CoffeeList)
@@ -103,7 +102,7 @@ const HomeScreen = ({ navigation }: any) => {
     imagelink_square,
     special_ingredient,
     type,
-    prices,
+    prices
   }: any) => {
     addToCart({
       id,
@@ -113,15 +112,15 @@ const HomeScreen = ({ navigation }: any) => {
       imagelink_square,
       special_ingredient,
       type,
-      prices,
-    });
-    calculateCartPrice();
+      prices
+    })
+    calculateCartPrice()
     ToastAndroid.showWithGravity(
       `${name} is Added to Cart`,
       ToastAndroid.SHORT,
-      ToastAndroid.CENTER,
-    );
-  };
+      ToastAndroid.CENTER
+    )
+  }
 
   return (
     <View style={styles.ScreenContainer}>
@@ -131,7 +130,7 @@ const HomeScreen = ({ navigation }: any) => {
         contentContainerStyle={styles.ScrollViewFlex}
       >
         {/* Header */}
-        <Header title="" />
+        {/* <Header title="" /> */}
 
         <Text style={styles.ScreenTitle}>
           Find the best{'\n'}coffee for you
@@ -279,7 +278,10 @@ const HomeScreen = ({ navigation }: any) => {
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.FlatListContainer}
+          contentContainerStyle={[
+            styles.FlatListContainer,
+            { marginBottom: tabBarHeight }
+          ]}
           keyExtractor={item => item.id}
           data={BeanList}
           renderItem={({ item }) => {
@@ -328,11 +330,12 @@ const styles = StyleSheet.create({
     fontSize: FONTSIZE.size_28,
     fontFamily: FONTFAMILY.poppins_semibold,
     color: COLORS.primaryWhiteHex,
-    paddingLeft: SPACING.space_30
+    paddingLeft: SPACING.space_30,
+    marginTop: SPACING.space_30
   },
   InputContainerComponent: {
     flexDirection: 'row',
-    margin: SPACING.space_30,
+    margin: SPACING.space_20,
     borderRadius: BORDERRADIUS.radius_20,
     backgroundColor: COLORS.primaryDarkGreyHex,
     alignItems: 'center'
@@ -349,7 +352,8 @@ const styles = StyleSheet.create({
   },
   CategoryScrollViewStyle: {
     paddingHorizontal: SPACING.space_20,
-    marginBottom: SPACING.space_20
+    marginBottom: SPACING.space_10,
+    marginTop: SPACING.space_10
   },
   CategoryScrollViewContainer: {
     paddingHorizontal: SPACING.space_15
