@@ -7,12 +7,12 @@ import {
   View
 } from 'react-native'
 import React, { useState } from 'react'
+import { useStore } from '../store/store'
 import { COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme'
 
 import GradientBGIcon from '../components/GradientBGIcon'
 import PaymentMethod from '../components/PaymentMethod'
 import PaymentFooter from '../components/PaymentFooter'
-import { useStore } from '../store/store'
 import PopUpAnimation from '../components/PopUpAnimation'
 
 const PaymentList = [
@@ -82,7 +82,7 @@ const PaymentScreen = ({ navigation, route }: any) => {
             />
           </TouchableOpacity>
           <Text style={styles.HeaderText}>Payments</Text>
-          <View style={styles.EmptyView}></View>
+          <View style={styles.EmptyView} />
         </View>
 
         <View style={styles.PaymentOptionsContainer}>
